@@ -1,6 +1,7 @@
 # Golang Errors with Stack Trace and Source Fragments
 
 [![GoDoc](https://godoc.org/github.com/ztrue/tracerr?status.svg)](https://godoc.org/github.com/ztrue/tracerr)
+[![GoReport](https://goreportcard.com/badge/github.com/ztrue/tracerr)](https://goreportcard.com/report/github.com/ztrue/tracerr)
 
 Tired of uninformative error output? Probably this will be more convenient:
 
