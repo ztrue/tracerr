@@ -11,8 +11,10 @@ import (
 
 // Error is an error with stack trace.
 type Error struct {
-	frames []Frame
-	err    error
+	// Error contains original error.
+	Err error
+	// Frames contains stack trace of an error.
+	Frames []Frame
 }
 
 // Errorf creates new error with stacktrace and formatted message.
@@ -40,7 +42,10 @@ func Wrap(err error) *Error {
 
 // Error returns error message.
 func (e *Error) Error() string {
-	return e.err.Error()
+	if e == nil {
+		return ""
+	}
+	return e.Err.Error()
 }
 
 // StackTrace returns stack trace of an error.
@@ -48,7 +53,7 @@ func (e *Error) StackTrace() []Frame {
 	if e == nil {
 		return nil
 	}
-	return e.frames
+	return e.Frames
 }
 
 // Frame is a single step in stack trace.
@@ -93,7 +98,7 @@ func trace(err error, skip int) *Error {
 		skip++
 	}
 	return &Error{
-		frames: frames,
-		err:    err,
+		Err:    err,
+		Frames: frames,
 	}
 }

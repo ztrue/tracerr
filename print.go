@@ -65,10 +65,13 @@ func calcRows(nums []int) (before, after int, withSource bool) {
 		after = nums[1]
 		withSource = true
 	} else if len(nums) == 1 {
-		// Extra line goes to "before" rather than "after".
-		after = (nums[0] - 1) / 2
-		before = nums[0] - after - 1
-		if nums[0] <= 0 {
+		if nums[0] > 0 {
+			// Extra line goes to "before" rather than "after".
+			after = (nums[0] - 1) / 2
+			before = nums[0] - after - 1
+		} else {
+			after = 0
+			before = 0
 			withSource = false
 		}
 	}
@@ -102,7 +105,7 @@ func sourceRows(rows []string, frame Frame, before, after int, colorized bool) [
 		if colorized {
 			message = aurora.Brown(message).String()
 		}
-		return append(rows, message)
+		return append(rows, message, "")
 	}
 	if len(lines) < frame.Line {
 		message := fmt.Sprintf(
@@ -112,7 +115,7 @@ func sourceRows(rows []string, frame Frame, before, after int, colorized bool) [
 		if colorized {
 			message = aurora.Brown(message).String()
 		}
-		return append(rows, message)
+		return append(rows, message, "")
 	}
 	current := frame.Line - 1
 	start := current - before
@@ -140,21 +143,25 @@ func sourceRows(rows []string, frame Frame, before, after int, colorized bool) [
 }
 
 func sprint(err error, nums []int, colorized bool) string {
+	if err == nil {
+		return ""
+	}
 	e, ok := err.(*Error)
 	if !ok {
 		return err.Error()
 	}
 	before, after, withSource := calcRows(nums)
-	expectedRows := len(e.frames) + 1
+	frames := e.StackTrace()
+	expectedRows := len(frames) + 1
 	if withSource {
-		expectedRows = (before+after+3)*len(e.frames) + 2
+		expectedRows = (before+after+3)*len(frames) + 2
 	}
 	rows := make([]string, 0, expectedRows)
 	rows = append(rows, e.Error())
 	if withSource {
 		rows = append(rows, "")
 	}
-	for _, frame := range e.frames {
+	for _, frame := range frames {
 		message := frame.String()
 		if colorized {
 			message = aurora.Bold(message).String()
