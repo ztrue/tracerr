@@ -1,9 +1,5 @@
 default: test
 
-.PHONY: install
-install:
-	go get github.com/logrusorgru/aurora
-
 .PHONY: lint
 lint:
 	go fmt . && \
