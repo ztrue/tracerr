@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.2] - 2019-02-12
+
+### Changed
+
+- RWMutex added for files caching, which fixing concurrent cache writing or writing-reading if any.
+
 ## [0.1.1] - 2019-02-09
 
 ### Added
