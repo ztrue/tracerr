@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strings"
+	"sync"
 
 	"github.com/logrusorgru/aurora"
 )
@@ -15,6 +16,8 @@ var DefaultLinesAfter = 2
 var DefaultLinesBefore = 3
 
 var cache = map[string][]string{}
+
+var mutex sync.RWMutex
 
 // Print prints error message with stack trace.
 func Print(err error) {
@@ -85,15 +88,20 @@ func calcRows(nums []int) (before, after int, withSource bool) {
 }
 
 func readLines(path string) ([]string, error) {
+	mutex.RLock()
 	lines, ok := cache[path]
+	mutex.RUnlock()
 	if ok {
 		return lines, nil
 	}
+
 	b, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("tracerr: file %s not found", path)
 	}
 	lines = strings.Split(string(b), "\n")
+	mutex.Lock()
+	defer mutex.Unlock()
 	cache[path] = lines
 	return lines, nil
 }
