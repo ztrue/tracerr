@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0] - 2019-02-15
+
+### Added
+
+- `tracerr.Unwrap()` and `Error.Unwrap()` that returns the original error.
+
 ## [0.1.2] - 2019-02-12
 
 ### Changed
