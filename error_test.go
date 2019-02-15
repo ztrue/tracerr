@@ -209,7 +209,7 @@ func TestStackTraceNotInstance(t *testing.T) {
 
 type UnwrapTestCase struct {
 	Error error
-	Wrap bool
+	Wrap  bool
 }
 
 func TestUnwrap(t *testing.T) {
@@ -219,11 +219,11 @@ func TestUnwrap(t *testing.T) {
 		},
 		{
 			Error: fmt.Errorf("some error #%d", 9),
-			Wrap: false,
+			Wrap:  false,
 		},
 		{
 			Error: fmt.Errorf("some error #%d", 9),
-			Wrap: true,
+			Wrap:  true,
 		},
 	}
 
