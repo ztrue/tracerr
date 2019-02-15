@@ -56,6 +56,11 @@ func (e *Error) StackTrace() []Frame {
 	return e.Frames
 }
 
+// Unwrap returns the original error.
+func (e *Error) Unwrap() error {
+	return e.Err
+}
+
 // Frame is a single step in stack trace.
 type Frame struct {
 	// Func contains a function name.
