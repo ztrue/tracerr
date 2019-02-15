@@ -59,7 +59,7 @@ Or:
 err := tracerr.Errorf("some error %d", num)
 ```
 
-### Add stack trace to existing error
+### Add Stack Trace to Existing Error
 
 > If `err` is `nil` then it still be `nil` with no stack trace added.
 
@@ -141,4 +141,18 @@ Or if `err` is of type `*tracerr.Error`:
 
 ```go
 frames := err.StackTrace()
+```
+
+### Get Original Error
+
+> Unwrapped error will be `nil` if `err` is `nil` and will be the same error if `err` is not an instance of `*tracerr.Error`.
+
+```go
+err = tracerr.Unwrap(err)
+```
+
+Or if `err` is of type `*tracerr.Error`:
+
+```go
+err = err.Unwrap()
 ```

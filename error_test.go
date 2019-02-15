@@ -206,3 +206,38 @@ func TestStackTraceNotInstance(t *testing.T) {
 		)
 	}
 }
+
+type UnwrapTestCase struct {
+	Error error
+	Wrap  bool
+}
+
+func TestUnwrap(t *testing.T) {
+	cases := []UnwrapTestCase{
+		{
+			Error: nil,
+		},
+		{
+			Error: fmt.Errorf("some error #%d", 9),
+			Wrap:  false,
+		},
+		{
+			Error: fmt.Errorf("some error #%d", 9),
+			Wrap:  true,
+		},
+	}
+
+	for i, c := range cases {
+		err := c.Error
+		if c.Wrap {
+			err = tracerr.Wrap(err)
+		}
+		unwrappedError := tracerr.Unwrap(err)
+		if unwrappedError != c.Error {
+			t.Errorf(
+				"tracerr.Unwrap(cases[%#v].Error) = %#v; want %#v",
+				i, unwrappedError, c.Error,
+			)
+		}
+	}
+}

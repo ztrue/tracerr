@@ -40,6 +40,18 @@ func Wrap(err error) *Error {
 	return trace(err, 2)
 }
 
+// Unwrap returns the original error.
+func Unwrap(err error) error {
+	if err == nil {
+		return nil
+	}
+	e, ok := err.(*Error)
+	if !ok {
+		return err
+	}
+	return e.Unwrap()
+}
+
 // Error returns error message.
 func (e *Error) Error() string {
 	if e == nil {
