@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.1] - 2019-02-16
+
+### Added
+
+- Benchmarks.
+- `DefaultCap` variable for performance tuning purposes.
+
+### Changed
+
+- Stack trace performance optimisation.
+
 ## [0.2.0] - 2019-02-15
 
 ### Added

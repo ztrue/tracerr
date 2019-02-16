@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/ztrue/tracerr"
-	// "../../tracerr"
 )
 
 func main() {

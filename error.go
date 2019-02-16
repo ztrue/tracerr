@@ -9,6 +9,11 @@ import (
 	"runtime"
 )
 
+// DefaultCap is a default cap for frames array.
+// It can be changed to number of expected frames
+// for purpose of performance optimisation.
+var DefaultCap = 20
+
 // Error is an error with stack trace.
 type Error struct {
 	// Error contains original error.
@@ -99,7 +104,7 @@ func (f Frame) String() string {
 }
 
 func trace(err error, skip int) *Error {
-	var frames []Frame
+	frames := make([]Frame, 0, DefaultCap)
 	for {
 		pc, path, line, ok := runtime.Caller(skip)
 		if !ok {

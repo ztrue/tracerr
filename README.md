@@ -156,3 +156,18 @@ Or if `err` is of type `*tracerr.Error`:
 ```go
 err = err.Unwrap()
 ```
+
+## Performance
+
+Stack trace causes a performance overhead, depending on a stack trace depth. This can be insignificant in a number of situations (such as HTTP request handling), however, avoid of adding a stack trace for really hot spots where a high number of errors created frequently, this can be inefficient.
+
+> Benchmarks done on a MacBook Pro 2015 with go 1.11.
+
+Benchmarks for creating a new error with a stack trace of different depth:
+
+```
+BenchmarkNew/5    200000    5646 ns/op    976 B/op   4 allocs/op
+BenchmarkNew/10   200000   11565 ns/op    976 B/op   4 allocs/op
+BenchmarkNew/20    50000   25629 ns/op    976 B/op   4 allocs/op
+BenchmarkNew/40    20000   65833 ns/op   2768 B/op   5 allocs/op
+```
