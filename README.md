@@ -163,7 +163,7 @@ Stack trace causes a performance overhead, depending on a stack trace depth. Thi
 
 > Benchmarks done on a MacBook Pro 2015 with go 1.11.
 
-Benchmarks for creation a new error with a stack trace of different depth:
+Benchmarks for creating a new error with a stack trace of different depth:
 
 ```
 BenchmarkNew/5    200000    5646 ns/op    976 B/op   4 allocs/op
