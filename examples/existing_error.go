@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 
 	"github.com/ztrue/tracerr"
-	// "../../tracerr"
 )
 
 func main() {

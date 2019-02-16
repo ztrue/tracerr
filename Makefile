@@ -21,3 +21,7 @@ coverage:
 	go test -coverprofile=coverage.out && \
 	go tool cover -func=coverage.out && \
 	go tool cover -html=coverage.out
+
+.PHONY: bench
+bench:
+	GOMAXPROCS=1 go test -bench=. -benchmem
