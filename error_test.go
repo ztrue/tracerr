@@ -10,7 +10,7 @@ import (
 )
 
 type ErrorTestCase struct {
-	Error              *tracerr.Error
+	Error              tracerr.Error
 	ExpectedMessage    string
 	ExpectedStackTrace []tracerr.Frame
 }
@@ -61,7 +61,7 @@ func TestError(t *testing.T) {
 			},
 		},
 		{
-			Error:           addFrameA("error with stack trace"),
+			Error:           addFrameA("error with stack trace").(tracerr.Error),
 			ExpectedMessage: "error with stack trace",
 			ExpectedStackTrace: []tracerr.Frame{
 				{
@@ -115,7 +115,14 @@ func TestError(t *testing.T) {
 	}
 
 	for i, c := range cases {
-		if c.Error.Error() != c.ExpectedMessage {
+		if c.Error == nil {
+			if c.ExpectedMessage != "" {
+				t.Errorf(
+					"cases[%#v].Error = nil; want %#v",
+					i, c.ExpectedMessage,
+				)
+			}
+		} else if c.Error.Error() != c.ExpectedMessage {
 			t.Errorf(
 				"cases[%#v].Error.Error() = %#v; want %#v",
 				i, c.Error.Error(), c.ExpectedMessage,
@@ -123,7 +130,7 @@ func TestError(t *testing.T) {
 		}
 
 		if c.ExpectedStackTrace == nil {
-			if c.Error.StackTrace() != nil {
+			if c.Error != nil && c.Error.StackTrace() != nil {
 				t.Errorf(
 					"cases[%#v].Error.StackTrace() = %#v; want %#v",
 					i, c.Error.StackTrace(), nil,
@@ -179,6 +186,62 @@ func TestError(t *testing.T) {
 			}
 		}
 
+	}
+}
+
+func TestCustomError(t *testing.T) {
+	err := errors.New("some error")
+	frames := []tracerr.Frame{
+		{
+			Func: "main.foo",
+			Line: 42,
+			Path: "/src/github.com/john/doe/foobar.go",
+		},
+		{
+			Func: "main.bar",
+			Line: 43,
+			Path: "/src/github.com/john/doe/bazqux.go",
+		},
+	}
+	customErr := tracerr.CustomError(err, frames)
+	message := customErr.Error()
+	if message != err.Error() {
+		t.Errorf(
+			"customErr.Error() = %#v; want %#v",
+			message, err.Error(),
+		)
+	}
+	unwrapped := customErr.Unwrap()
+	if unwrapped != err {
+		t.Errorf(
+			"customErr.Unwrap() = %#v; want %#v",
+			unwrapped, err,
+		)
+	}
+	stackTrace := customErr.StackTrace()
+	if len(stackTrace) != len(frames) {
+		t.Errorf(
+			"len(customErr.StackTrace()) = %#v; want %#v",
+			len(stackTrace), len(frames),
+		)
+	}
+	for i, frame := range frames {
+		if stackTrace[i] != frame {
+			t.Errorf(
+				"customErr.StackTrace()[%#v] = %#v; want %#v",
+				i, stackTrace[i], frame,
+			)
+		}
+	}
+}
+
+func TestErrorNil(t *testing.T) {
+	wrapped := wrapError(nil)
+	if wrapped != nil {
+		t.Errorf(
+			"wrapped = %#v; want nil",
+			wrapped,
+		)
 	}
 }
 
@@ -240,4 +303,8 @@ func TestUnwrap(t *testing.T) {
 			)
 		}
 	}
+}
+
+func wrapError(err error) error {
+	return tracerr.Wrap(err)
 }

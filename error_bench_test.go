@@ -26,7 +26,7 @@ func BenchmarkNew(b *testing.B) {
 	}
 }
 
-func addFrames(depth int, message string) *tracerr.Error {
+func addFrames(depth int, message string) error {
 	if depth <= 1 {
 		return tracerr.New(message)
 	}

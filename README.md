@@ -69,7 +69,7 @@ err = tracerr.Wrap(err)
 
 ### Print Error and Stack Trace
 
-> Stack trace will be printed only if `err` is of type `*tracerr.Error`, otherwise just error text will be shown.
+> Stack trace will be printed only if `err` is of type `tracerr.Error`, otherwise just error text will be shown.
 
 This will print error message and stack trace if any:
 
@@ -131,13 +131,13 @@ text := tracerr.SprintSource(err, 5, 2)
 
 ### Get Stack Trace
 
-> Stack trace will be empty if `err` is not an instance of `*tracerr.Error`.
+> Stack trace will be empty if `err` is not an instance of `tracerr.Error`.
 
 ```go
 frames := tracerr.StackTrace(err)
 ```
 
-Or if `err` is of type `*tracerr.Error`:
+Or if `err` is of type `tracerr.Error`:
 
 ```go
 frames := err.StackTrace()
@@ -145,13 +145,13 @@ frames := err.StackTrace()
 
 ### Get Original Error
 
-> Unwrapped error will be `nil` if `err` is `nil` and will be the same error if `err` is not an instance of `*tracerr.Error`.
+> Unwrapped error will be `nil` if `err` is `nil` and will be the same error if `err` is not an instance of `tracerr.Error`.
 
 ```go
 err = tracerr.Unwrap(err)
 ```
 
-Or if `err` is of type `*tracerr.Error`:
+Or if `err` is of type `tracerr.Error`:
 
 ```go
 err = err.Unwrap()

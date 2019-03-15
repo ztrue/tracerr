@@ -154,7 +154,7 @@ func sprint(err error, nums []int, colorized bool) string {
 	if err == nil {
 		return ""
 	}
-	e, ok := err.(*Error)
+	e, ok := err.(Error)
 	if !ok {
 		return err.Error()
 	}

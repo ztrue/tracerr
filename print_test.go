@@ -71,7 +71,7 @@ func TestPrint(t *testing.T) {
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:17 github.com/ztrue/tracerr_test.addFrameC()",
 				"14\t}",
 				"15\t",
-				"16\tfunc addFrameC(message string) *tracerr.Error {",
+				"16\tfunc addFrameC(message string) error {",
 				"17\t\treturn tracerr.New(message)",
 				"18\t}",
 				"19\t",
@@ -79,7 +79,7 @@ func TestPrint(t *testing.T) {
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:13 github.com/ztrue/tracerr_test.addFrameB()",
 				"10\t}",
 				"11\t",
-				"12\tfunc addFrameB(message string) *tracerr.Error {",
+				"12\tfunc addFrameB(message string) error {",
 				"13\t\treturn addFrameC(message)",
 				"14\t}",
 				"15\t",
@@ -87,7 +87,7 @@ func TestPrint(t *testing.T) {
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()",
 				"6\t)",
 				"7\t",
-				"8\tfunc addFrameA(message string) *tracerr.Error {",
+				"8\tfunc addFrameA(message string) error {",
 				"9\t\treturn addFrameB(message)",
 				"10\t}",
 				"11\t",
@@ -113,19 +113,19 @@ func TestPrint(t *testing.T) {
 				"",
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:17 github.com/ztrue/tracerr_test.addFrameC()",
 				"15\t",
-				"16\tfunc addFrameC(message string) *tracerr.Error {",
+				"16\tfunc addFrameC(message string) error {",
 				"17\t\treturn tracerr.New(message)",
 				"18\t}",
 				"",
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:13 github.com/ztrue/tracerr_test.addFrameB()",
 				"11\t",
-				"12\tfunc addFrameB(message string) *tracerr.Error {",
+				"12\tfunc addFrameB(message string) error {",
 				"13\t\treturn addFrameC(message)",
 				"14\t}",
 				"",
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()",
 				"7\t",
-				"8\tfunc addFrameA(message string) *tracerr.Error {",
+				"8\tfunc addFrameA(message string) error {",
 				"9\t\treturn addFrameB(message)",
 				"10\t}",
 				"",
@@ -148,19 +148,19 @@ func TestPrint(t *testing.T) {
 				"",
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:17 github.com/ztrue/tracerr_test.addFrameC()",
 				"15\t",
-				"16\tfunc addFrameC(message string) *tracerr.Error {",
+				"16\tfunc addFrameC(message string) error {",
 				"17\t\treturn tracerr.New(message)",
 				"18\t}",
 				"",
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:13 github.com/ztrue/tracerr_test.addFrameB()",
 				"11\t",
-				"12\tfunc addFrameB(message string) *tracerr.Error {",
+				"12\tfunc addFrameB(message string) error {",
 				"13\t\treturn addFrameC(message)",
 				"14\t}",
 				"",
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()",
 				"7\t",
-				"8\tfunc addFrameA(message string) *tracerr.Error {",
+				"8\tfunc addFrameA(message string) error {",
 				"9\t\treturn addFrameB(message)",
 				"10\t}",
 				"",
@@ -213,14 +213,14 @@ func TestPrint(t *testing.T) {
 				"13\t\treturn addFrameC(message)",
 				"14\t}",
 				"15\t",
-				"16\tfunc addFrameC(message string) *tracerr.Error {",
+				"16\tfunc addFrameC(message string) error {",
 				"17\t\treturn tracerr.New(message)",
 				"",
 				"/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()",
 				"9\t\treturn addFrameB(message)",
 				"10\t}",
 				"11\t",
-				"12\tfunc addFrameB(message string) *tracerr.Error {",
+				"12\tfunc addFrameB(message string) error {",
 				"13\t\treturn addFrameC(message)",
 				"",
 				"/src/github.com/ztrue/tracerr/print_test.go:26 github.com/ztrue/tracerr_test.TestPrint()",
@@ -241,17 +241,17 @@ func TestPrint(t *testing.T) {
 				message,
 				"",
 				aurora.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:17 github.com/ztrue/tracerr_test.addFrameC()").String(),
-				aurora.Black("16").String() + "\tfunc addFrameC(message string) *tracerr.Error {",
+				aurora.Black("16").String() + "\tfunc addFrameC(message string) error {",
 				aurora.Red("17\t\treturn tracerr.New(message)").String(),
 				aurora.Black("18").String() + "\t}",
 				"",
 				aurora.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:13 github.com/ztrue/tracerr_test.addFrameB()").String(),
-				aurora.Black("12").String() + "\tfunc addFrameB(message string) *tracerr.Error {",
+				aurora.Black("12").String() + "\tfunc addFrameB(message string) error {",
 				aurora.Red("13\t\treturn addFrameC(message)").String(),
 				aurora.Black("14").String() + "\t}",
 				"",
 				aurora.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()").String(),
-				aurora.Black("8").String() + "\tfunc addFrameA(message string) *tracerr.Error {",
+				aurora.Black("8").String() + "\tfunc addFrameA(message string) error {",
 				aurora.Red("9\t\treturn addFrameB(message)").String(),
 				aurora.Black("10").String() + "\t}",
 				"",
@@ -273,9 +273,9 @@ func TestPrint(t *testing.T) {
 }
 
 func TestNoLine(t *testing.T) {
-	err := &tracerr.Error{
-		Err: errors.New("some error"),
-		Frames: []tracerr.Frame{
+	err := tracerr.CustomError(
+		errors.New("some error"),
+		[]tracerr.Frame{
 			{
 				Func: "main.Foo",
 				Line: 1337,
@@ -287,7 +287,7 @@ func TestNoLine(t *testing.T) {
 				Path: "error_helper_test.go",
 			},
 		},
-	}
+	)
 	output := tracerr.SprintSource(err)
 	expectedRows := []string{
 		"some error",
@@ -309,9 +309,9 @@ func TestNoLine(t *testing.T) {
 }
 
 func TestNoLineColor(t *testing.T) {
-	err := &tracerr.Error{
-		Err: errors.New("some error"),
-		Frames: []tracerr.Frame{
+	err := tracerr.CustomError(
+		errors.New("some error"),
+		[]tracerr.Frame{
 			{
 				Func: "main.Foo",
 				Line: 1337,
@@ -323,7 +323,7 @@ func TestNoLineColor(t *testing.T) {
 				Path: "error_helper_test.go",
 			},
 		},
-	}
+	)
 	output := tracerr.SprintSourceColor(err)
 	expectedRows := []string{
 		"some error",
@@ -345,9 +345,9 @@ func TestNoLineColor(t *testing.T) {
 }
 
 func TestNoSourceFile(t *testing.T) {
-	err := &tracerr.Error{
-		Err: errors.New("some error"),
-		Frames: []tracerr.Frame{
+	err := tracerr.CustomError(
+		errors.New("some error"),
+		[]tracerr.Frame{
 			{
 				Func: "main.Foo",
 				Line: 42,
@@ -359,7 +359,7 @@ func TestNoSourceFile(t *testing.T) {
 				Path: "/tmp/not_exists_2.go",
 			},
 		},
-	}
+	)
 	output := tracerr.SprintSource(err)
 	expectedRows := []string{
 		"some error",
@@ -381,9 +381,9 @@ func TestNoSourceFile(t *testing.T) {
 }
 
 func TestNoSourceFileColor(t *testing.T) {
-	err := &tracerr.Error{
-		Err: errors.New("some error"),
-		Frames: []tracerr.Frame{
+	err := tracerr.CustomError(
+		errors.New("some error"),
+		[]tracerr.Frame{
 			{
 				Func: "main.Foo",
 				Line: 42,
@@ -395,7 +395,7 @@ func TestNoSourceFileColor(t *testing.T) {
 				Path: "/tmp/not_exists_2.go",
 			},
 		},
-	}
+	)
 	output := tracerr.SprintSourceColor(err)
 	expectedRows := []string{
 		"some error",

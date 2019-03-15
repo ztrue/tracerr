@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.0] - 2019-03-15
+
+### Added
+
+- `tracerr.CustomError()` that allows to create error with custom stack trace.
+
+### Changed
+
+- `*tracerr.Error` struct replaced with `tracerr.Error` interface.
+
 ## [0.2.1] - 2019-02-16
 
 ### Added
