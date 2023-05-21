@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0] - 2023-05-21
+
+### Changed
+
+- `github.com/logrusorgru/aurora` dependency removed.
+- Deprecated `ioutil.ReadFile` replaced with `os.ReadFile`.
+
 ## [0.3.0] - 2019-03-15
 
 ### Added

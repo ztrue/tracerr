@@ -1,7 +1,6 @@
 language: go
 
 before_install:
-  - go get github.com/logrusorgru/aurora
   - go get github.com/mattn/goveralls
 
 go:

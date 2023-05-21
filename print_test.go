@@ -3,6 +3,7 @@ package tracerr_test
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"regexp"
@@ -12,6 +13,7 @@ import (
 	"github.com/ztrue/tracerr"
 )
 
+//
 type PrintTestCase struct {
 	Output               string
 	Printer              func()
@@ -238,25 +240,25 @@ func TestPrint(t *testing.T) {
 			ExpectedRows: []string{
 				message,
 				"",
-				tracerr.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:17 github.com/ztrue/tracerr_test.addFrameC()"),
-				tracerr.Black("16") + "\tfunc addFrameC(message string) error {",
-				tracerr.Red("17\t\treturn tracerr.New(message)"),
-				tracerr.Black("18") + "\t}",
+				bold("/src/github.com/ztrue/tracerr/error_helper_test.go:17 github.com/ztrue/tracerr_test.addFrameC()"),
+				black("16") + "\tfunc addFrameC(message string) error {",
+				red("17\t\treturn tracerr.New(message)"),
+				black("18") + "\t}",
 				"",
-				tracerr.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:13 github.com/ztrue/tracerr_test.addFrameB()"),
-				tracerr.Black("12") + "\tfunc addFrameB(message string) error {",
-				tracerr.Red("13\t\treturn addFrameC(message)"),
-				tracerr.Black("14") + "\t}",
+				bold("/src/github.com/ztrue/tracerr/error_helper_test.go:13 github.com/ztrue/tracerr_test.addFrameB()"),
+				black("12") + "\tfunc addFrameB(message string) error {",
+				red("13\t\treturn addFrameC(message)"),
+				black("14") + "\t}",
 				"",
-				tracerr.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()"),
-				tracerr.Black("8") + "\tfunc addFrameA(message string) error {",
-				tracerr.Red("9\t\treturn addFrameB(message)"),
-				tracerr.Black("10") + "\t}",
+				bold("/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()"),
+				black("8") + "\tfunc addFrameA(message string) error {",
+				red("9\t\treturn addFrameB(message)"),
+				black("10") + "\t}",
 				"",
-				tracerr.Bold("/src/github.com/ztrue/tracerr/print_test.go:26 github.com/ztrue/tracerr_test.TestPrint()"),
-				tracerr.Black("25") + "\t\tmessage := \"runtime error: index out of range\"",
-				tracerr.Red("26\t\terr := addFrameA(message)"),
-				tracerr.Black("27") + "\t",
+				bold("/src/github.com/ztrue/tracerr/print_test.go:26 github.com/ztrue/tracerr_test.TestPrint()"),
+				black("25") + "\t\tmessage := \"runtime error: index out of range\"",
+				red("26\t\terr := addFrameA(message)"),
+				black("27") + "\t",
 				"",
 			},
 			ExpectedMinExtraRows: 2,
@@ -326,11 +328,11 @@ func TestNoLineColor(t *testing.T) {
 	expectedRows := []string{
 		"some error",
 		"",
-		tracerr.Bold("error_helper_test.go:1337 main.Foo()"),
-		tracerr.Yellow("tracerr: too few lines, got 19, want 1337"),
+		bold("error_helper_test.go:1337 main.Foo()"),
+		yellow("tracerr: too few lines, got 19, want 1337"),
 		"",
-		tracerr.Bold("error_helper_test.go:1338 main.Bar()"),
-		tracerr.Yellow("tracerr: too few lines, got 19, want 1338"),
+		bold("error_helper_test.go:1338 main.Bar()"),
+		yellow("tracerr: too few lines, got 19, want 1338"),
 		"",
 	}
 	expected := strings.Join(expectedRows, "\n")
@@ -398,11 +400,11 @@ func TestNoSourceFileColor(t *testing.T) {
 	expectedRows := []string{
 		"some error",
 		"",
-		tracerr.Bold("/tmp/not_exists.go:42 main.Foo()"),
-		tracerr.Yellow("tracerr: file /tmp/not_exists.go not found"),
+		bold("/tmp/not_exists.go:42 main.Foo()"),
+		yellow("tracerr: file /tmp/not_exists.go not found"),
 		"",
-		tracerr.Bold("/tmp/not_exists_2.go:43 main.Bar()"),
-		tracerr.Yellow("tracerr: file /tmp/not_exists_2.go not found"),
+		bold("/tmp/not_exists_2.go:43 main.Bar()"),
+		yellow("tracerr: file /tmp/not_exists_2.go not found"),
 		"",
 	}
 	expected := strings.Join(expectedRows, "\n")
@@ -450,4 +452,20 @@ func captureOutput(fn func()) string {
 	var buf bytes.Buffer
 	io.Copy(&buf, r)
 	return buf.String()
+}
+
+func bold(in string) string {
+	return fmt.Sprintf("\x1b[1m%s\x1b[0m", in)
+}
+
+func black(in string) string {
+	return fmt.Sprintf("\x1b[30m%s\x1b[0m", in)
+}
+
+func red(in string) string {
+	return fmt.Sprintf("\x1b[31m%s\x1b[0m", in)
+}
+
+func yellow(in string) string {
+	return fmt.Sprintf("\x1b[33m%s\x1b[0m", in)
 }

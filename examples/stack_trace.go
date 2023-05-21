@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"github.com/ztrue/tracerr"
 )
@@ -20,6 +20,6 @@ func read() error {
 }
 
 func readNonExistent() error {
-	_, err := ioutil.ReadFile("/tmp/non_existent_file")
+	_, err := os.ReadFile("/tmp/non_existent_file")
 	return tracerr.Wrap(err)
 }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"io/ioutil"
+	"os"
 
 	"github.com/ztrue/tracerr"
 )
@@ -17,7 +17,7 @@ func read() error {
 }
 
 func readNonExistent() error {
-	_, err := ioutil.ReadFile("/tmp/non_existent_file")
+	_, err := os.ReadFile("/tmp/non_existent_file")
 	// Add stack trace to existing error, no matter if it's nil.
 	return tracerr.Wrap(err)
 }
