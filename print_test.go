@@ -9,8 +9,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/logrusorgru/aurora"
-
 	"github.com/ztrue/tracerr"
 )
 
@@ -240,25 +238,25 @@ func TestPrint(t *testing.T) {
 			ExpectedRows: []string{
 				message,
 				"",
-				aurora.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:17 github.com/ztrue/tracerr_test.addFrameC()").String(),
-				aurora.Black("16").String() + "\tfunc addFrameC(message string) error {",
-				aurora.Red("17\t\treturn tracerr.New(message)").String(),
-				aurora.Black("18").String() + "\t}",
+				tracerr.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:17 github.com/ztrue/tracerr_test.addFrameC()"),
+				tracerr.Black("16") + "\tfunc addFrameC(message string) error {",
+				tracerr.Red("17\t\treturn tracerr.New(message)"),
+				tracerr.Black("18") + "\t}",
 				"",
-				aurora.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:13 github.com/ztrue/tracerr_test.addFrameB()").String(),
-				aurora.Black("12").String() + "\tfunc addFrameB(message string) error {",
-				aurora.Red("13\t\treturn addFrameC(message)").String(),
-				aurora.Black("14").String() + "\t}",
+				tracerr.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:13 github.com/ztrue/tracerr_test.addFrameB()"),
+				tracerr.Black("12") + "\tfunc addFrameB(message string) error {",
+				tracerr.Red("13\t\treturn addFrameC(message)"),
+				tracerr.Black("14") + "\t}",
 				"",
-				aurora.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()").String(),
-				aurora.Black("8").String() + "\tfunc addFrameA(message string) error {",
-				aurora.Red("9\t\treturn addFrameB(message)").String(),
-				aurora.Black("10").String() + "\t}",
+				tracerr.Bold("/src/github.com/ztrue/tracerr/error_helper_test.go:9 github.com/ztrue/tracerr_test.addFrameA()"),
+				tracerr.Black("8") + "\tfunc addFrameA(message string) error {",
+				tracerr.Red("9\t\treturn addFrameB(message)"),
+				tracerr.Black("10") + "\t}",
 				"",
-				aurora.Bold("/src/github.com/ztrue/tracerr/print_test.go:26 github.com/ztrue/tracerr_test.TestPrint()").String(),
-				aurora.Black("25").String() + "\t\tmessage := \"runtime error: index out of range\"",
-				aurora.Red("26\t\terr := addFrameA(message)").String(),
-				aurora.Black("27").String() + "\t",
+				tracerr.Bold("/src/github.com/ztrue/tracerr/print_test.go:26 github.com/ztrue/tracerr_test.TestPrint()"),
+				tracerr.Black("25") + "\t\tmessage := \"runtime error: index out of range\"",
+				tracerr.Red("26\t\terr := addFrameA(message)"),
+				tracerr.Black("27") + "\t",
 				"",
 			},
 			ExpectedMinExtraRows: 2,
@@ -328,11 +326,11 @@ func TestNoLineColor(t *testing.T) {
 	expectedRows := []string{
 		"some error",
 		"",
-		aurora.Bold("error_helper_test.go:1337 main.Foo()").String(),
-		aurora.Brown("tracerr: too few lines, got 19, want 1337").String(),
+		tracerr.Bold("error_helper_test.go:1337 main.Foo()"),
+		tracerr.Yellow("tracerr: too few lines, got 19, want 1337"),
 		"",
-		aurora.Bold("error_helper_test.go:1338 main.Bar()").String(),
-		aurora.Brown("tracerr: too few lines, got 19, want 1338").String(),
+		tracerr.Bold("error_helper_test.go:1338 main.Bar()"),
+		tracerr.Yellow("tracerr: too few lines, got 19, want 1338"),
 		"",
 	}
 	expected := strings.Join(expectedRows, "\n")
@@ -400,11 +398,11 @@ func TestNoSourceFileColor(t *testing.T) {
 	expectedRows := []string{
 		"some error",
 		"",
-		aurora.Bold("/tmp/not_exists.go:42 main.Foo()").String(),
-		aurora.Brown("tracerr: file /tmp/not_exists.go not found").String(),
+		tracerr.Bold("/tmp/not_exists.go:42 main.Foo()"),
+		tracerr.Yellow("tracerr: file /tmp/not_exists.go not found"),
 		"",
-		aurora.Bold("/tmp/not_exists_2.go:43 main.Bar()").String(),
-		aurora.Brown("tracerr: file /tmp/not_exists_2.go not found").String(),
+		tracerr.Bold("/tmp/not_exists_2.go:43 main.Bar()"),
+		tracerr.Yellow("tracerr: file /tmp/not_exists_2.go not found"),
 		"",
 	}
 	expected := strings.Join(expectedRows, "\n")
