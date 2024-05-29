@@ -34,7 +34,7 @@ func TestError(t *testing.T) {
 				{
 					Func: "github.com/ztrue/tracerr_test.TestError",
 					Line: 31,
-					Path: "/src/github.com/ztrue/tracerr/error_test.go",
+					Path: "/tracerr/error_test.go",
 				},
 			},
 		},
@@ -45,7 +45,7 @@ func TestError(t *testing.T) {
 				{
 					Func: "github.com/ztrue/tracerr_test.TestError",
 					Line: 42,
-					Path: "/src/github.com/ztrue/tracerr/error_test.go",
+					Path: "/tracerr/error_test.go",
 				},
 			},
 		},
@@ -56,7 +56,7 @@ func TestError(t *testing.T) {
 				{
 					Func: "github.com/ztrue/tracerr_test.TestError",
 					Line: 53,
-					Path: "/src/github.com/ztrue/tracerr/error_test.go",
+					Path: "/tracerr/error_test.go",
 				},
 			},
 		},
@@ -67,22 +67,22 @@ func TestError(t *testing.T) {
 				{
 					Func: "github.com/ztrue/tracerr_test.addFrameC",
 					Line: 17,
-					Path: "/src/github.com/ztrue/tracerr/error_helper_test.go",
+					Path: "/tracerr/error_helper_test.go",
 				},
 				{
 					Func: "github.com/ztrue/tracerr_test.addFrameB",
 					Line: 13,
-					Path: "/src/github.com/ztrue/tracerr/error_helper_test.go",
+					Path: "/tracerr/error_helper_test.go",
 				},
 				{
 					Func: "github.com/ztrue/tracerr_test.addFrameA",
 					Line: 9,
-					Path: "/src/github.com/ztrue/tracerr/error_helper_test.go",
+					Path: "/tracerr/error_helper_test.go",
 				},
 				{
 					Func: "github.com/ztrue/tracerr_test.TestError",
 					Line: 64,
-					Path: "/src/github.com/ztrue/tracerr/error_test.go",
+					Path: "/tracerr/error_test.go",
 				},
 			},
 		},
@@ -93,22 +93,22 @@ func TestError(t *testing.T) {
 				{
 					Func: "github.com/ztrue/tracerr_test.addFrameC",
 					Line: 17,
-					Path: "/src/github.com/ztrue/tracerr/error_helper_test.go",
+					Path: "/tracerr/error_helper_test.go",
 				},
 				{
 					Func: "github.com/ztrue/tracerr_test.addFrameB",
 					Line: 13,
-					Path: "/src/github.com/ztrue/tracerr/error_helper_test.go",
+					Path: "/tracerr/error_helper_test.go",
 				},
 				{
 					Func: "github.com/ztrue/tracerr_test.addFrameA",
 					Line: 9,
-					Path: "/src/github.com/ztrue/tracerr/error_helper_test.go",
+					Path: "/tracerr/error_helper_test.go",
 				},
 				{
 					Func: "github.com/ztrue/tracerr_test.TestError",
 					Line: 90,
-					Path: "/src/github.com/ztrue/tracerr/error_test.go",
+					Path: "/tracerr/error_test.go",
 				},
 			},
 		},
