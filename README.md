@@ -3,7 +3,6 @@
 [![GoDoc](https://godoc.org/github.com/ztrue/tracerr?status.svg)](https://godoc.org/github.com/ztrue/tracerr)
 [![Report](https://goreportcard.com/badge/github.com/ztrue/tracerr)](https://goreportcard.com/report/github.com/ztrue/tracerr)
 [![Coverage Status](https://coveralls.io/repos/github/ztrue/tracerr/badge.svg?branch=master)](https://coveralls.io/github/ztrue/tracerr?branch=master)
-[![Build Status](https://travis-ci.com/ztrue/tracerr.svg?branch=master)](https://travis-ci.com/ztrue/tracerr)
 
 Tired of uninformative error output? Probably this will be more convenient:
 

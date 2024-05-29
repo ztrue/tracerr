@@ -22,4 +22,4 @@ jobs:
         go-version: '1.22'
 
     - name: Test
-      run: go test -cover -v -covermode=count -coverprofile=coverage.out
+      run: go test -cover -v
