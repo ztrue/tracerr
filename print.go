@@ -127,22 +127,27 @@ func sourceRows(rows []string, frame Frame, before, after int, colorized bool) [
 	current := frame.Line - 1
 	start := current - before
 	end := current + after
+	maxLine := end + 1
+	if maxLine > len(lines) {
+		maxLine = len(lines)
+	}
+	width := len(strconv.Itoa(maxLine))
 	for i := start; i <= end; i++ {
 		if i < 0 || i >= len(lines) {
 			continue
 		}
 		line := lines[i]
 		var message string
-		// TODO Pad to the same length.
+		lineNum := fmt.Sprintf("%*d", width, i+1)
 		if i == frame.Line-1 {
-			message = fmt.Sprintf("%d\t%s", i+1, line)
+			message = fmt.Sprintf("%s\t%s", lineNum, line)
 			if colorized {
 				message = red(message)
 			}
 		} else if colorized {
-			message = fmt.Sprintf("%s\t%s", black(strconv.Itoa(i+1)), line)
+			message = fmt.Sprintf("%s\t%s", black(lineNum), line)
 		} else {
-			message = fmt.Sprintf("%d\t%s", i+1, line)
+			message = fmt.Sprintf("%s\t%s", lineNum, line)
 		}
 		rows = append(rows, message)
 	}
