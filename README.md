@@ -158,15 +158,18 @@ err = err.Unwrap()
 
 ## Performance
 
-Stack trace causes a performance overhead, depending on a stack trace depth. This can be insignificant in a number of situations (such as HTTP request handling), however, avoid of adding a stack trace for really hot spots where a high number of errors created frequently, this can be inefficient.
-
-> Benchmarks done on a MacBook Pro 2015 with go 1.11.
-
 Benchmarks for creating a new error with a stack trace of different depth:
 
 ```
-BenchmarkNew/5    200000    5646 ns/op    976 B/op   4 allocs/op
-BenchmarkNew/10   200000   11565 ns/op    976 B/op   4 allocs/op
-BenchmarkNew/20    50000   25629 ns/op    976 B/op   4 allocs/op
-BenchmarkNew/40    20000   65833 ns/op   2768 B/op   5 allocs/op
+GOMAXPROCS=1 go test -bench=. -benchmem
+goos: linux
+goarch: amd64
+pkg: github.com/ztrue/tracerr
+cpu: Intel(R) Core(TM) i7-14700KF
+BenchmarkNew/5           4500129               267.1 ns/op           256 B/op          4 allocs/op
+BenchmarkNew/10          3325456               359.5 ns/op           256 B/op          4 allocs/op
+BenchmarkNew/20          1000000              1001 ns/op             576 B/op          5 allocs/op
+BenchmarkNew/40           538689              2171 ns/op            1216 B/op          6 allocs/op
+PASS
+ok      github.com/ztrue/tracerr        5.246s
 ```
