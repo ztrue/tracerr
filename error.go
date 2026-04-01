@@ -24,7 +24,9 @@ type Error interface {
 type errorData struct {
 	// err contains original error.
 	err error
-	// frames contains stack trace of an error.
+	// pcs contains raw program counters, resolved lazily to frames.
+	pcs []uintptr
+	// frames contains pre-resolved stack trace.
 	frames []Frame
 }
 
@@ -76,8 +78,26 @@ func (e *errorData) Error() string {
 	return e.err.Error()
 }
 
-// StackTrace returns stack trace of an error.
+// StackTrace resolves and returns the stack trace, caching the result.
 func (e *errorData) StackTrace() []Frame {
+	if e.pcs == nil {
+		return e.frames
+	}
+	cf := runtime.CallersFrames(e.pcs)
+	frames := make([]Frame, 0, len(e.pcs))
+	for {
+		f, more := cf.Next()
+		frames = append(frames, Frame{
+			Func: f.Function,
+			Line: f.Line,
+			Path: f.File,
+		})
+		if !more {
+			break
+		}
+	}
+	e.frames = frames
+	e.pcs = nil
 	return e.frames
 }
 
@@ -112,23 +132,17 @@ func (f Frame) String() string {
 }
 
 func trace(err error, skip int) Error {
-	frames := make([]Frame, 0, DefaultCap)
+	pcs := make([]uintptr, DefaultCap)
 	for {
-		pc, path, line, ok := runtime.Caller(skip)
-		if !ok {
+		n := runtime.Callers(skip+1, pcs)
+		if n < len(pcs) {
+			pcs = pcs[:n]
 			break
 		}
-		fn := runtime.FuncForPC(pc)
-		frame := Frame{
-			Func: fn.Name(),
-			Line: line,
-			Path: path,
-		}
-		frames = append(frames, frame)
-		skip++
+		pcs = make([]uintptr, len(pcs)*2)
 	}
 	return &errorData{
-		err:    err,
-		frames: frames,
+		err: err,
+		pcs: pcs,
 	}
 }

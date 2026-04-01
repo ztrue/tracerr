@@ -235,6 +235,20 @@ func TestCustomError(t *testing.T) {
 	}
 }
 
+func TestDeepStack(t *testing.T) {
+	var recurse func(n int) error
+	recurse = func(n int) error {
+		if n == 0 {
+			return tracerr.New("deep error")
+		}
+		return recurse(n - 1)
+	}
+	err := recurse(25).(tracerr.Error)
+	if len(err.StackTrace()) < 25 {
+		t.Errorf("expected at least 25 frames, got %d", len(err.StackTrace()))
+	}
+}
+
 func TestErrorNil(t *testing.T) {
 	wrapped := wrapError(nil)
 	if wrapped != nil {
