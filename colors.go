@@ -15,7 +15,7 @@ func bold(in string) string {
 }
 
 func black(in string) string {
-	return color(30, in)
+	return color(90, in)
 }
 
 func red(in string) string {

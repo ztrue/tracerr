@@ -459,7 +459,7 @@ func bold(in string) string {
 }
 
 func black(in string) string {
-	return fmt.Sprintf("\x1b[30m%s\x1b[0m", in)
+	return fmt.Sprintf("\x1b[90m%s\x1b[0m", in)
 }
 
 func red(in string) string {
