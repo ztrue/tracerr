@@ -16,6 +16,7 @@ var DefaultCap = 20
 
 // Error is an error with stack trace.
 type Error interface {
+	Callers() []uintptr
 	Error() string
 	StackTrace() []Frame
 	Unwrap() error
@@ -35,6 +36,14 @@ func CustomError(err error, frames []Frame) Error {
 	return &errorData{
 		err:    err,
 		frames: frames,
+	}
+}
+
+// CustomErrorFromCallers creates an error with provided program counters.
+func CustomErrorFromCallers(err error, pcs []uintptr) Error {
+	return &errorData{
+		err: err,
+		pcs: pcs,
 	}
 }
 
@@ -73,6 +82,11 @@ func Unwrap(err error) error {
 	return e.Unwrap()
 }
 
+// Callers returns raw program counters of the stack trace.
+func (e *errorData) Callers() []uintptr {
+	return e.pcs
+}
+
 // Error returns error message.
 func (e *errorData) Error() string {
 	return e.err.Error()
@@ -80,7 +94,7 @@ func (e *errorData) Error() string {
 
 // StackTrace resolves and returns the stack trace, caching the result.
 func (e *errorData) StackTrace() []Frame {
-	if e.pcs == nil {
+	if e.frames != nil {
 		return e.frames
 	}
 	cf := runtime.CallersFrames(e.pcs)
@@ -97,7 +111,6 @@ func (e *errorData) StackTrace() []Frame {
 		}
 	}
 	e.frames = frames
-	e.pcs = nil
 	return e.frames
 }
 
