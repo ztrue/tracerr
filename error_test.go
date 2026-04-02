@@ -235,6 +235,29 @@ func TestCustomError(t *testing.T) {
 	}
 }
 
+func TestCustomErrorFromCallers(t *testing.T) {
+	pcs := tracerr.New("some error").Callers()
+	err := tracerr.CustomErrorFromCallers(errors.New("custom"), pcs)
+	if len(err.Callers()) != len(pcs) {
+		t.Errorf("expected %d callers, got %d", len(pcs), len(err.Callers()))
+	}
+	if len(err.StackTrace()) == 0 {
+		t.Error("expected non-empty stack trace")
+	}
+}
+
+func TestCallers(t *testing.T) {
+	err := tracerr.New("some error")
+	pcs := err.Callers()
+	if len(pcs) == 0 {
+		t.Error("expected non-empty callers")
+	}
+	customErr := tracerr.CustomError(errors.New("custom"), nil)
+	if customErr.Callers() != nil {
+		t.Error("expected nil callers for CustomError")
+	}
+}
+
 func TestDeepStack(t *testing.T) {
 	var recurse func(n int) error
 	recurse = func(n int) error {
