@@ -6,6 +6,7 @@ package tracerr
 
 import (
 	"fmt"
+	"log/slog"
 	"runtime"
 )
 
@@ -20,6 +21,7 @@ type Error interface {
 	Error() string
 	StackTrace() []Frame
 	Unwrap() error
+	LogValue() slog.Value
 }
 
 type errorData struct {
@@ -112,6 +114,13 @@ func (e *errorData) StackTrace() []Frame {
 	}
 	e.frames = frames
 	return e.frames
+}
+
+func (e *errorData) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.String("error", e.Error()),
+		slog.Any("stack_trace", Sprint(e.err)),
+	)
 }
 
 // Unwrap returns the original error.
